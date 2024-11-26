@@ -15,7 +15,22 @@ This package is available via [PyPi](https://pypi.org/project/bytewax-lever) as
 
 ## Usage
 
-TBD
+```python
+import os
+
+import bytewax.operators as op
+from bytewax.dataflow import Dataflow
+from bytewax.connectors.stdio import StdOutSink
+
+from bytewax_lever import LeverPostingSource
+
+LEVER_API_KEY = os.environ["LEVER_API_KEY"]
+
+flow = Dataflow("lever_example")
+flow_input = op.input("input", flow, LeverPostingSource(api_key=LEVER_API_KEY))
+
+op.output("output", flow_input, StdOutSink())
+```
 
 ## License
 
