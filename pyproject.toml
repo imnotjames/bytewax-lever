@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
     { name = "James Ward", email = "james@notjam.es" }
 ]
-license = { file = "LICENSE", text = "MIT License" }
+license = { file = "LICENSE" }
 keywords = [ "bytewax", "lever" ]
 requires-python = ">=3.12"
 dependencies = [
