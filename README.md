@@ -1,3 +1,5 @@
+[![PyPI](https://img.shields.io/pypi/v/bytewax-lever.svg?style=flat-square)](https://pypi.org/project/bytewax-lever/)
+
 # Bytewax Lever
 
 [Lever](https://lever.co) connectors for [Bytewax](https://bytewax.io).
