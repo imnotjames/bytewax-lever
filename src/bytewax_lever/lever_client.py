@@ -6,6 +6,7 @@ from logging import getLogger
 
 import requests
 
+from .html_to_text import html_to_text
 from .types import (
     LeverPosting,
     LeverRichTextContent,
@@ -50,9 +51,7 @@ class LeverClient:
         title = data["text"]
         content_html = data["content"]
 
-        # This is a hack, but it's probably fine for now, right?
-        # Eventually, we would need to use something like lxml or beautifulsoup
-        content_text = content_html.replace("<li>", "* ").replace("</li>", "\n").strip()
+        content_text = html_to_text(content_html.replace("</li>", "</li>\n")).strip()
 
         return LeverRichTextContent(
             f"{title}\n\n{content_text}",
