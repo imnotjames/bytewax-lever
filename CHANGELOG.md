@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/imnotjames/bytewax-lever/compare/v0.2.1...v0.2.2) (2024-11-27)
+
+
+### Documentation
+
+* add simple usage ([e29405d](https://github.com/imnotjames/bytewax-lever/commit/e29405d906884abf1c4e7c4ec3e50e07838b2e33))
+
 ## [0.2.1](https://github.com/imnotjames/bytewax-lever/compare/v0.2.0...v0.2.1) (2024-11-26)
 
 

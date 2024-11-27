@@ -1,6 +1,6 @@
 [project]
 name = "bytewax-lever"
-version = "0.2.1"
+version = "0.2.2"
 description = "Lever connectors for Bytewax"
 readme = "README.md"
 authors = [
