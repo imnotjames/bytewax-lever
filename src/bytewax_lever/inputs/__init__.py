@@ -1,4 +1,4 @@
-from .lever_posting_source import LeverPostingSource
+from .posting_source import PostingSource
 
 
-__all__ = ("LeverPostingSource",)
+__all__ = ("PostingSource",)

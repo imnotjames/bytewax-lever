@@ -8,12 +8,12 @@ import requests
 
 from .html_to_text import html_to_text
 from .types import (
-    LeverPosting,
-    LeverRichTextContent,
-    LeverSalaryInterval,
-    LeverSalary,
-    LeverWorkplaceType,
-    LeverPostingState,
+    Posting,
+    RichTextContent,
+    SalaryInterval,
+    Salary,
+    WorkplaceType,
+    PostingState,
 )
 
 
@@ -45,7 +45,7 @@ class LeverClient:
         return response.json()
 
     @staticmethod
-    def _parse_lever_list(data: dict) -> LeverRichTextContent:
+    def _parse_lever_list(data: dict) -> RichTextContent:
         """Try to interpret lever lists as Rich Text Content"""
 
         title = data["text"]
@@ -53,30 +53,30 @@ class LeverClient:
 
         content_text = html_to_text(content_html.replace("</li>", "</li>\n")).strip()
 
-        return LeverRichTextContent(
+        return RichTextContent(
             f"{title}\n\n{content_text}",
             f"<h2>{html.escape(title)}</h2><ul>{content_html}</ul>",
         )
 
     @staticmethod
-    def _parse_lever_posting(data) -> LeverPosting:
+    def _parse_lever_posting(data) -> Posting:
         urls = data["urls"]
 
         if "salaryRange" in data:
-            salary = LeverSalary(
+            salary = Salary(
                 int(data["salaryRange"]["min"]),
                 int(data["salaryRange"]["max"]),
                 data["salaryRange"]["currency"],
-                LeverSalaryInterval(data["salaryRange"]["interval"]),
+                SalaryInterval(data["salaryRange"]["interval"]),
             )
         else:
             salary = None
 
-        description = LeverRichTextContent(
+        description = RichTextContent(
             data["content"]["description"], data["content"]["descriptionHtml"]
         )
 
-        closing = LeverRichTextContent(
+        closing = RichTextContent(
             data["content"]["closing"], data["content"]["closingHtml"]
         )
 
@@ -85,17 +85,17 @@ class LeverClient:
             for list_item in data["content"]["lists"]
         ]
 
-        return LeverPosting(
+        return Posting(
             id=data["id"],
             created_at=datetime.fromtimestamp(data["createdAt"] / 1000),
             updated_at=datetime.fromtimestamp(data["updatedAt"] / 1000),
-            state=LeverPostingState(data["state"]),
+            state=PostingState(data["state"]),
             distribution_channels=data["distributionChannels"],
             tags=data["tags"],
             country=data["country"],
             location=data["categories"]["location"],
             commitment=data["categories"]["commitment"],
-            workplace_type=LeverWorkplaceType(data["workplaceType"]),
+            workplace_type=WorkplaceType(data["workplaceType"]),
             apply_url=urls["apply"] if urls is not None else None,
             posting_url=urls["show"] if urls is not None else None,
             department=data["categories"]["department"],
@@ -111,7 +111,7 @@ class LeverClient:
         self,
         *,
         updated_at_start: float | None = None,
-    ) -> Sequence[LeverPosting]:
+    ) -> Sequence[Posting]:
         data = self._get(
             "postings",
             {

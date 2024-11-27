@@ -1,20 +1,20 @@
-from .inputs import LeverPostingSource
+from .inputs import PostingSource
 from .types import (
-    LeverPosting,
-    LeverPostingState,
-    LeverRichTextContent,
-    LeverSalary,
-    LeverSalaryInterval,
-    LeverWorkplaceType,
+    Posting,
+    PostingState,
+    RichTextContent,
+    Salary,
+    SalaryInterval,
+    WorkplaceType,
 )
 
 
 __all__ = (
-    "LeverPostingSource",
-    "LeverPosting",
-    "LeverPostingState",
-    "LeverRichTextContent",
-    "LeverSalary",
-    "LeverSalaryInterval",
-    "LeverWorkplaceType",
+    "PostingSource",
+    "Posting",
+    "PostingState",
+    "RichTextContent",
+    "Salary",
+    "SalaryInterval",
+    "WorkplaceType",
 )

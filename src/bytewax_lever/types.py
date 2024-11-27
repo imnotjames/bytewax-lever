@@ -4,7 +4,7 @@ from enum import Enum
 from typing import Sequence
 
 
-class LeverPostingState(Enum):
+class PostingState(Enum):
     PUBLISHED = "published"
     INTERNAL = "internal"
     CLOSED = "closed"
@@ -13,7 +13,7 @@ class LeverPostingState(Enum):
     REJECTED = "rejected"
 
 
-class LeverWorkplaceType(Enum):
+class WorkplaceType(Enum):
     UNSPECIFIED = "unspecified"
     ONSITE = "on-site"
     REMOTE = "remote"
@@ -21,13 +21,13 @@ class LeverWorkplaceType(Enum):
 
 
 @dataclass
-class LeverRichTextContent:
+class RichTextContent:
     text: str
 
     html: str
 
 
-class LeverSalaryInterval(Enum):
+class SalaryInterval(Enum):
     PER_YEAR = "per-year-salary"
     PER_MONTH = "per-month-salary"
     SEMI_MONTH = "semi-month-salary"
@@ -40,31 +40,31 @@ class LeverSalaryInterval(Enum):
 
 
 @dataclass
-class LeverSalary:
+class Salary:
     minimum: int
     maximum: int
     currency: str
-    interval: LeverSalaryInterval
+    interval: SalaryInterval
 
 
 @dataclass
-class LeverPosting:
+class Posting:
     id: str
     created_at: datetime
     updated_at: datetime
-    state: LeverPostingState
+    state: PostingState
     distribution_channels: list[str]
     tags: list[str]
     country: str
     location: str
     commitment: str
-    workplace_type: LeverWorkplaceType
+    workplace_type: WorkplaceType
     apply_url: str | None
     posting_url: str | None
     department: str | None
     team: str
     title: str
-    description: LeverRichTextContent
-    lists: Sequence[LeverRichTextContent]
-    closing: LeverRichTextContent
-    salary: LeverSalary | None
+    description: RichTextContent
+    lists: Sequence[RichTextContent]
+    closing: RichTextContent
+    salary: Salary | None

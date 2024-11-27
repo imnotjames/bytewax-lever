@@ -5,11 +5,11 @@ from bytewax.inputs import StatefulSourcePartition, FixedPartitionedSource
 
 from ..lever_client import LeverClient
 from ..types import (
-    LeverPosting,
+    Posting,
 )
 
 
-class LeverPostingSourcePartition(StatefulSourcePartition[LeverPosting, float]):
+class PostingSourcePartition(StatefulSourcePartition[Posting, float]):
     def __init__(
         self,
         *,
@@ -32,7 +32,7 @@ class LeverPostingSourcePartition(StatefulSourcePartition[LeverPosting, float]):
 
         return datetime.now(UTC) + timedelta(seconds=self._interval)
 
-    def next_batch(self) -> Iterable[LeverPosting]:
+    def next_batch(self) -> Iterable[Posting]:
         self._has_at_least_one_request = True
 
         postings = self._client.get_postings(updated_at_start=self._from_timestamp + 1)
@@ -45,20 +45,20 @@ class LeverPostingSourcePartition(StatefulSourcePartition[LeverPosting, float]):
             yield posting
 
 
-class LeverPostingSource(FixedPartitionedSource[LeverPosting, float]):
+class PostingSource(FixedPartitionedSource[Posting, float]):
     def __init__(self, *, api_key: str, base_url: str | None = None):
         self._api_key = api_key
         self._base_url = base_url
 
     def build_part(
         self, step_id: str, for_part: str, resume_state: Optional[float]
-    ) -> LeverPostingSourcePartition:
+    ) -> PostingSourcePartition:
         lever_client = LeverClient(
             self._api_key,
             self._base_url,
         )
 
-        return LeverPostingSourcePartition(
+        return PostingSourcePartition(
             client=lever_client,
             from_timestamp=resume_state or 0,
         )
@@ -67,4 +67,4 @@ class LeverPostingSource(FixedPartitionedSource[LeverPosting, float]):
         return ["partition_0"]
 
 
-__all__ = ("LeverPostingSource", "LeverPostingSourcePartition")
+__all__ = ("PostingSource", "PostingSourcePartition")

@@ -22,12 +22,12 @@ import bytewax.operators as op
 from bytewax.dataflow import Dataflow
 from bytewax.connectors.stdio import StdOutSink
 
-from bytewax_lever import LeverPostingSource
+from bytewax_lever import PostingSource
 
 LEVER_API_KEY = os.environ["LEVER_API_KEY"]
 
 flow = Dataflow("lever_example")
-flow_input = op.input("input", flow, LeverPostingSource(api_key=LEVER_API_KEY))
+flow_input = op.input("input", flow, PostingSource(api_key=LEVER_API_KEY))
 
 op.output("output", flow_input, StdOutSink())
 ```
